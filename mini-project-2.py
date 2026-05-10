@@ -94,6 +94,15 @@ model.compile(
 
 model.summary()
 
+optimizer = tf.keras.optimizers.ٍSGD(learning_rate=0.01)
+model.compile(
+    optimizer=optimizer,
+    loss="categorical_crossentropy",
+    metrics=["accuracy"]
+)
+
+model.summary()
+
 
 # =========================
 # Train Model
