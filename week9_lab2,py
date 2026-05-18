@@ -1,0 +1,105 @@
+# -*- coding: utf-8 -*-
+"""day42_tokenization_student.py
+
+# Tokenization Lab
+In this lab, you will implement and compare different tokenization strategies:
+1. Whitespace Splitting
+2. Regex-based Tokenization
+3. Character-level Tokenization
+"""
+
+import re
+import numpy as np
+import pandas as pd
+
+# ========================
+# 1) SETUP & HELPERS
+# ========================
+
+RANDOM_STATE = 42
+np.random.seed(RANDOM_STATE)
+
+def simple_whitespace_tokenize(text):
+    return text.split()
+   
+
+def regex_tokenize(text):
+    return re.findall(r"[^a-zA-Z']", text)
+def char_tokenize(text):    
+    return list(text)
+
+
+print("Setup complete ✅")
+
+# ========================
+# 2) DATA PREPARATION
+# ========================
+
+sentences = [
+    "I can't believe it's already 5pm!",
+    "Tokenization matters: NLP is fun :)",
+    "Email me at example@test.com #urgent",
+]
+
+df = pd.DataFrame({"text": sentences})
+print("Input Data:\n", df)
+
+# ========================
+# 3) MAIN TASK: TOKENIZE
+# ========================
+
+# TODO: Select an index (0-2) and a strategy ('whitespace', 'regex', 'char')
+idx = 0
+highlight = "regex"
+
+text = df.loc[idx, "text"]
+
+# TODO: Apply your functions to 'text'
+ws_tokens = simple_whitespace_tokenize(text)
+rx_tokens = regex_tokenize(text)
+ch_tokens = char_tokenize(text)
+
+print(f"\nAnalyzing: {text}")
+print(f"Whitespace Tokens: {ws_tokens}")
+print(f"Regex Tokens: {rx_tokens}")
+print(f"Character Tokens: {ch_tokens}")
+
+# ========================
+# 4) EVALUATION & COMPARISON
+# ========================
+
+"""
+GOAL: Create a DataFrame comparing the token counts
+for each strategy across all sentences.
+"""
+
+
+# TODO: Complete the dictionary for the DataFrame
+token_counts = pd.DataFrame({
+    "sentence": df["text"],
+    "whitespace_count": [len(simple_whitespace_tokenize(text)) for text in df["text"]],
+    "regex_count": [len(regex_tokenize(text)) for text in df["text"]],
+    "char_count": [len(char_tokenize(text)) for text in df["text"]],
+})
+
+
+print("\nToken Counts:\n", token_counts)
+
+# ========================
+# 5) REFLECTION (TODO)
+# ========================
+
+"""
+Answer briefly:
+
+1) In sentence index 1, what happens to the smiley face ':)' in Whitespace vs Regex?
+it's will removed in regex but it will be a token in whitespace
+2) Why might Character Tokenization be useful for languages without spaces?
+it's useful for languages without spaces 
+3) Which method is best if you want to keep the email address in index 2 intact?
+whitespace because it will keep the email address as one token, while regex will split it into multiple tokens.
+"""
+
+# ============================================
+# END
+# ============================================
